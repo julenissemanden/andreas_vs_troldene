@@ -15,7 +15,7 @@ WALK_R = deque([2, 0])
 class App:
     def __init__(self):
 
-        pyxel.init(80, 80, title="ANDREAS vs. TROLDENE", display_scale=2)
+        pyxel.init(80, 80, title="ANDREAS vs. TROLDENE", display_scale=6)
         pyxel.load("res/res.pyxres")
         self.reset()
         pyxel.run(self.update, self.draw)
