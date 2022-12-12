@@ -15,7 +15,7 @@ WALK_R = deque([2, 0])
 class App:
     def __init__(self):
 
-        pyxel.init(80, 80, title="ANDREAS vs. TROLDENE", display_scale=6)
+        pyxel.init(80, 80, title="ANDREAS vs. TROLDENE", display_scale=2)
         pyxel.load("res/res.pyxres")
         self.reset()
         pyxel.run(self.update, self.draw)
@@ -63,10 +63,11 @@ class App:
         else:
             self.explosion()
             
-            if pyxel.btnp(pyxel.KEY_SPACE):
+            if pyxel.btnr(pyxel.KEY_SPACE):
                 self.reset()
 
     def draw(self):
+        
         if self.won:
             pyxel.cls(0)
             
@@ -91,6 +92,7 @@ class App:
             
         elif self.started:
             pyxel.cls(0)
+            
             pyxel.blt(
                 self.me['x'],
                 self.me['y'],
@@ -105,17 +107,13 @@ class App:
             self.bullet_draw()
             
             score_string = str(self.points) + ' / ' + str(self.highscore)
-            score_col = 10 if self.highscore < self.points else 7
             
             # pyxel.text(6, 6, score_string, 13)
-            pyxel.text(5, 5, score_string, score_col)
-            pyxel.text(5, 13, f'Level {self.level}', score_col)
+            pyxel.text(5, 5, score_string, 7)
+            pyxel.text(5, 13, f'Level {self.level}', 7)
             
             if self.dead:
                 pyxel.text(22, 21, "GAME OVER!", 8)
-                # pyxel.circ(self.bullet['x'], self.bullet['y'], 7, self.explosion_col[0])
-                # pyxel.circ(self.bullet['x'], self.bullet['y'], 4, self.explosion_col[1])
-                # pyxel.circ(self.bullet['x'], self.bullet['y'], 2, self.explosion_col[2])
 
                 pyxel.rectb(
                     self.me['x'],
@@ -217,10 +215,10 @@ class App:
                   self.bullet_face['x'],
                   self.bullet_face['y'],
                   7,
-                  8)
+                  8,
+                  6)
 
     def shoot_bullet(self):
-        
         if self.bullet['x'] in (-11, 90):
             self.bullet_left = not self.bullet_left
             self.points += 1
@@ -257,17 +255,15 @@ class App:
 
     def intersects(self):
 
-        # charecter rects minus arms and legs
-
-        me_top_right_x = self.me['x'] + BOXWIDTH
+        me_top_right_x = self.me['x'] + 14
         me_top_right_y = self.me['y'] + 11
         me_bottom_left_x = self.me['x']
-        me_bottom_left_y = self.me['y'] + 19
-
-        bullet_top_right_x = self.bullet['x'] + 7
+        me_bottom_left_y = self.me['y'] + 18
+        
+        bullet_top_right_x = self.bullet['x'] + 6
         bullet_top_right_y = self.bullet['y']
         bullet_bottom_left_x = self.bullet['x']
-        bullet_bottom_left_y = self.bullet['y'] + 8
+        bullet_bottom_left_y = self.bullet['y'] + 7
 
         if not (me_top_right_x < bullet_bottom_left_x or me_bottom_left_x > bullet_top_right_x or me_top_right_y > bullet_bottom_left_y or me_bottom_left_y < bullet_top_right_y):
             self.dead = True
@@ -307,7 +303,7 @@ class App:
                 'y': 8
             }
 
-            self.bullet_min = 72
+            self.bullet_min = 71
             self.bullet_max = 50
 
             self.bullet_moves = [
