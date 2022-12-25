@@ -50,7 +50,7 @@ class App:
 
     def update(self):
         if not self.started:
-            if (pyxel.btn(pyxel.KEY_SPACE)):
+            if (pyxel.btn(pyxel.KEY_SPACE) or pyxel.btn(pyxel.KEY_UP)):
                 self.started = True
 
         elif not self.dead:
